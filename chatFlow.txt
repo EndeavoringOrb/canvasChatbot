@@ -1,0 +1,20 @@
+user: query
+bot: search for files
+bot: respond using files
+
+SEARCH:
+assignment title "" -> assignment description
+announcement author "" -> announcement title
+
+
+User: What do I have to do for Lab 0?
+Bot: assignment title "Lab 0" -> assignment description
+Lab 0
+Bot: ...
+
+
+User: What do I have to do for Lab 76?
+Bot: <search/assignments/titles -> description> "Lab 76"
+Lab 7 description
+Lab 6 description
+Bot: I could not find any information on Lab 76. Did you mean Lab 7 or Lab 6?

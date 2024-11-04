@@ -1,0 +1,20 @@
+user: What do we have to do for Lab 0?
+assistant: 
+
+To complete Lab 0, you need to write stubs and JUnit-style tests for the three methods in BoatTour.java. The exact tests are not provided, but you can assume they are JUnit-style tests that cover all possible input scenarios.
+
+Here's a high-level outline of what you need to do:
+
+1. Create a new Java file called Examples.java with JUnit-style tests for the three methods in BoatTour.java.
+2. In your test class, write JUnit-style tests for each of the three methods in BoatTour.java. Make sure to cover all possible input scenarios and test for expected output.
+3. Use the JUnit framework to write and run your tests.
+
+Some examples of JUnit-style tests you might write:
+
+* TestExpenses() to ensure that the method returns the correct total expenses for a given tour.
+* TestRevenue() to ensure that the method returns the correct total revenue for a given tour.
+* TestProfit() to ensure that the method returns the correct profit for a given tour.
+
+Remember to test for all possible input scenarios and cover all edge cases. You can use a variety of test data to test each of the methods, such as different tour types, locations, and dates.
+
+Also, make sure to use JUnit-style assertions to verify that your tests are passing correctly. For example, you might use the `assertThat()` method to check that the method returns the correct value.
