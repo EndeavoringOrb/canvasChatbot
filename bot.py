@@ -7,6 +7,7 @@ API_URL = "https://arc-ai-rag-01.wpi.edu/api/v1/prediction/d1f72c8e-a6af-4db8-ac
 llm: Llama = Llama(
     model_path="C:/Users/aaron/CODING/llms/Llama-3.2-1B-Instruct-Q4_K_M.gguf",
     n_ctx=8192,
+    verbose=False
 )
 
 
@@ -46,9 +47,6 @@ Today Date: {date.today().strftime("%d %b %Y")}
 def queryBot(query):
     if query["local"]:
         text = formatPromptLlama3_2(query)
-        print("\n" * 10)
-        print(text)
-        print("\n" * 10)
         output = llm(
             text,  # Prompt
             max_tokens=None,  # Generate up to max_tokens new tokens

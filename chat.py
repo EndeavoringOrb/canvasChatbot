@@ -32,7 +32,9 @@ class Documents:
         self.documents = getDocuments(courseFolder)
         self.documentEmbeddings = np.load(f"embeddings/{self.courseName}.npy")
         self.model = SentenceTransformer(
-            "nomic-ai/nomic-embed-text-v1", trust_remote_code=True
+            "nomic-ai/nomic-embed-text-v1", 
+            trust_remote_code=True,
+            weights_only=False
         )
 
     def findDocuments(self, query, topN):
@@ -52,6 +54,7 @@ class Documents:
 
 
 if __name__ == "__main__":
+    print(f"Loading documents")
     documentSearcher = Documents("canvasDownloads\\0\\B24\\CS2102-B24")
     local = True
     dialogue = []
@@ -66,7 +69,7 @@ if __name__ == "__main__":
         searchQuery = getSearchQuery(dialogue)
 
         # Search for documents
-        print("searching documents")
+        print(f"searching documents with query \"{searchQuery}\"")
         documents = documentSearcher.findDocuments(searchQuery, 1)
 
         # Get bot response
@@ -77,6 +80,7 @@ if __name__ == "__main__":
             )
         ).strip()
         dialogue.append({"name": "assistant", "text": response})
+        print(f"Bot: {response}")
 
         with open("chatOutput.txt", "w", encoding="utf-8") as f:
             f.write(getChatText(dialogue))

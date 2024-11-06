@@ -71,12 +71,12 @@ def getDocuments(courseFolder: str):
 
 
 def summarizeDocuments(documents):
-    return [summarizeText(text) for text in tqdm(documents, desc="Summarizing")]
+    return [summarizeText(text) for text in tqdm(documents, desc="Summarizing Documents")]
 
 
 if __name__ == "__main__":
     print(f"Loading embedding model")
-    model = SentenceTransformer("nomic-ai/nomic-embed-text-v1", trust_remote_code=True)
+    model = SentenceTransformer("nomic-ai/nomic-embed-text-v1", trust_remote_code=True, weights_only=False)
     courseFolder = "canvasDownloads\\0\\B24\\CS2102-B24"
 
     # Get summaries

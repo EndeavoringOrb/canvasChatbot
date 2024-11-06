@@ -1,14 +1,7 @@
 user: What do I have to do for Lab 0?
-assistant: Based on the provided DOCUMENTS, it appears that you need to complete Lab 0: Setting up a Java Project Unit Tests. 
+assistant: To complete Lab 0, you need to:
 
-According to the text, you need to write stubs and JUnit-style tests for `BoatTour.java`'s three methods in an `Examples.java` file. The tests are not expected to pass locally on stubbed out code, but are expected to pass on the reference solution hidden behind the autograder (in the style of test-driven development).
+1. Write JUnit-style tests for `BoatTour.java`'s three methods.
+2. Submit a single `.java` file to Gradescope, which will be autograded against a reference solution.
 
-To complete this task, you can follow these steps:
-
-1. Open the `Examples.java` file and create three methods (expenses(), revenue(), and profit()) in it.
-2. Write JUnit-style tests for these methods in the `Examples.java` file.
-3. These tests should not pass locally on stubbed out code, but should pass on the reference solution.
-4. Make sure to implement `BoatTour.java` stubs only if needed.
-5. Submit the `Examples.java` file with JUnit-style tests for `BoatTour.java`'s methods.
-
-Please note that the provided DOCUMENTS may not contain any specific instructions or guidelines for the task, but the text itself provides the necessary information to complete the task.
+In other words, you should create tests that cover all three methods in `BoatTour.java` and submit only the test class to Gradescope.
