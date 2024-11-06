@@ -1,7 +1,63 @@
-user: What do I have to do for Lab 0?
-assistant: To complete Lab 0, you need to:
+user: What do I have to do for lab 2?
+assistant: To complete Lab 2, you need to write stubs and JUnit-style tests for the methods in Competition.java. Here's what you need to do:
 
-1. Write JUnit-style tests for `BoatTour.java`'s three methods.
-2. Submit a single `.java` file to Gradescope, which will be autograded against a reference solution.
+1. Review the instructions for Lab 2.
+2. Create a new file called Examples.java, which will contain your tests.
+3. For each method in Competition.java you want to test, create a new test method that covers all possible scenarios. For example, if the method has one parameter, you can create a test method with two parameters. If the method has one return value, you can create a test method with two return values.
+4. Use JUnit 4 to write your tests. You can use the `@Test` annotation to define test methods.
+5. In each test method, call the corresponding method in Competition.java, passing in a list of Copter objects as the argument, and verify that the method returns the expected result.
+6. Make sure to test all possible scenarios, including:
+	* A list of Copter objects with a single Vehicle
+	* A list of Copter objects with multiple Vehicles
+	* A list of Copter objects with a single Battery
+	* A list of Copter objects with multiple Batteries
+	* A list of Copter objects with multiple Propellers
+7. Use the `assertEquals` method to verify that the method returns the expected result.
 
-In other words, you should create tests that cover all three methods in `BoatTour.java` and submit only the test class to Gradescope.
+Here's an example of what your Examples.java file might look like:
+```java
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+
+public class CompetitionTest {
+    @Test
+    public void testGetCost() {
+        // Arrange
+        int[] cost = {100, 50, 20};
+
+        // Act
+        int result = Competition.getCost(cost);
+
+        // Assert
+        assertEquals(170, result);
+    }
+
+    @Test
+    public void testGetDistance() {
+        // Arrange
+        int[] distance = {100, 50, 20};
+
+        // Act
+        double result = Competition.getDistance(distance);
+
+        // Assert
+        assertEquals(150.0, result);
+    }
+
+    @Test
+    public void testGetVehicle() {
+        // Arrange
+        List<Copter> copters = new ArrayList<>();
+        copters.add(new Copter(1, "Vehicle1"));
+        copters.add(new Copter(2, "Vehicle2"));
+        copters.add(new Copter(3, "Vehicle3"));
+
+        // Act
+        List<Vehicle> vehicles = Competition.getVehicle(copters);
+
+        // Assert
+        assertEquals(3, vehicles.size());
+    }
+}
+```
+In this example, we're testing the `getCost`, `getDistance`, and `getVehicle` methods. We're passing in a list of Copter objects as the argument, and verifying that the method returns the expected result.

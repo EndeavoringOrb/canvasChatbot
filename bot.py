@@ -6,8 +6,8 @@ API_URL = "https://arc-ai-rag-01.wpi.edu/api/v1/prediction/d1f72c8e-a6af-4db8-ac
 
 llm: Llama = Llama(
     model_path="C:/Users/aaron/CODING/llms/Llama-3.2-1B-Instruct-Q4_K_M.gguf",
-    n_ctx=8192,
-    verbose=False
+    n_ctx=32768,
+    verbose=False,
 )
 
 
@@ -38,9 +38,14 @@ Today Date: {date.today().strftime("%d %b %Y")}
     for item in query["dialogue"][:-1]:
         text += f"<|start_header_id|>{item['name']}<|end_header_id|>\n\n{item['text']}<|eot_id|>"
     documents = "\n\n".join(query["documents"])
-    documents = f"\n\nDOCUMENTS:\n{documents}" if len(query["documents"]) > 0 else ""
+    documents = (
+        f"\n\nDOCUMENTS:\n{documents}\nEND DOCUMENTS"
+        if len(query["documents"]) > 0
+        else ""
+    )
     text += f"<|start_header_id|>{query['dialogue'][-1]['name']}<|end_header_id|>\n\n{query['dialogue'][-1]['text']}{documents}<|eot_id|>"
     text += "<|start_header_id|>assistant<|end_header_id|>"
+    text += query["responseStart"]
     return text
 
 
@@ -65,16 +70,21 @@ def queryBot(query):
         text += "\n\n".join(query["documents"])
         for item in query["dialogue"]:
             text += f"{item['name']}: {item['text']}\n"
-        text += "Bot: "
+        text += f"Bot: {query['responseStart']}"
         return queryAPI({"question": text})["text"]
 
 
 def createQuery(
-    systemPrompt: str, dialogue: list[dict[str, str]], documents: list[str], local: bool
+    systemPrompt: str,
+    dialogue: list[dict[str, str]],
+    documents: list[str],
+    responseStart: str = "",
+    local: bool = True,
 ):
     return {
         "systemPrompt": systemPrompt,
         "dialogue": dialogue,
         "documents": documents,
+        "responseStart": responseStart,
         "local": local,
     }

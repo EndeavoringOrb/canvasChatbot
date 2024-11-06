@@ -9,12 +9,13 @@ def getSearchQuery(
 ):
     query = queryBot(
         createQuery(
-            "Respond with a search query that will find documents relevant to the user's last entry.",
+            "Respond with a plain text search query that will find documents in the current subject relevant to the user's last entry.",
             dialogue,
             [],
+            'plain text search query: "',
             local=True,
         )
-    )
+    ).split('"')[0]
     return query
 
 
@@ -32,9 +33,7 @@ class Documents:
         self.documents = getDocuments(courseFolder)
         self.documentEmbeddings = np.load(f"embeddings/{self.courseName}.npy")
         self.model = SentenceTransformer(
-            "nomic-ai/nomic-embed-text-v1", 
-            trust_remote_code=True,
-            weights_only=False
+            "nomic-ai/nomic-embed-text-v1", trust_remote_code=True
         )
 
     def findDocuments(self, query, topN):
@@ -55,7 +54,7 @@ class Documents:
 
 if __name__ == "__main__":
     print(f"Loading documents")
-    documentSearcher = Documents("canvasDownloads\\0\\B24\\CS2102-B24")
+    documentSearcher = Documents(input("Please enter the course folder path: "))
     local = True
     dialogue = []
     documents = []
@@ -69,14 +68,21 @@ if __name__ == "__main__":
         searchQuery = getSearchQuery(dialogue)
 
         # Search for documents
-        print(f"searching documents with query \"{searchQuery}\"")
-        documents = documentSearcher.findDocuments(searchQuery, 1)
+        print(f'searching documents with query "{searchQuery}"')
+        documents = documentSearcher.findDocuments(searchQuery, 2)
+        for i, doc in enumerate(documents):
+            print(f"DOC {i}:")
+            print(doc)
 
         # Get bot response
         print("generating response")
         response = queryBot(
             createQuery(
-                "Answer the user based on the DOCUMENTS.", dialogue, documents, local
+                "Answer the user based on the DOCUMENTS if the DOCUMENTS are relevant.",
+                dialogue,
+                documents,
+                "",
+                local,
             )
         ).strip()
         dialogue.append({"name": "assistant", "text": response})
