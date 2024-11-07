@@ -78,7 +78,7 @@ if __name__ == "__main__":
         print("generating response")
         response = queryBot(
             createQuery(
-                "Answer the user based on the DOCUMENTS if the DOCUMENTS are relevant.",
+                "Answer the user. If the DOCUMENTS are relevant, base your response on them.",
                 dialogue,
                 documents,
                 "",
