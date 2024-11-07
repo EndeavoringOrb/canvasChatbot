@@ -2,3 +2,5 @@ canvasDownloads
 pyEnv
 __pycache__
 embeddings
+secrets.txt
+.gitignore

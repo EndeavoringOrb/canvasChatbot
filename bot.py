@@ -5,7 +5,7 @@ import requests
 API_URL = "a secret"
 
 llm: Llama = Llama(
-    model_path=input("Please enter path to .gguf file of model: "),
+    model_path=input("Please enter path to .gguf file of model: ").strip().strip('"'),
     n_ctx=32768,
     verbose=False,
 )

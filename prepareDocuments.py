@@ -5,6 +5,7 @@ from tqdm import tqdm
 import numpy as np
 from bot import *
 import html2text
+import pptx2txt2
 import json
 import os
 
@@ -170,6 +171,9 @@ def getDocuments(courseFolder: str):
                 for page in reader.pages:
                     text += page.extract_text()
                 documents.append(text)
+            elif name.endswith(".pptx"):
+                text += pptx2txt2.extract_text(name)
+                documents.append(text)
             pbar.update(1)
 
     return documents
@@ -194,7 +198,7 @@ if __name__ == "__main__":
         # "canvasDownloads\\2\\Default Term\\SESA-Projects",
         # "canvasDownloads\\1\\Default Term\\wkgp-sesa",
         "canvasDownloads\\0\\B24\\CS2102-B24",
-        "canvasDownloads\\0\\B24\\MA2051-B24-BL02 (group 2)",
+        #"canvasDownloads\\0\\B24\\MA2051-B24-BL02 (group 2)",
     ]
 
     for courseFolder in courseFolders:
@@ -211,8 +215,8 @@ if __name__ == "__main__":
             f"  Avg. Document # Tokens: {int(sum(documentLengths) / len(documents)):,}"
         )
         print(f"  Max. Document # Tokens: {max(documentLengths):,}")
-        documents = summarizeDocuments(documents)
-        print(documents)
+        #documents = summarizeDocuments(documents)
+        #print(documents)
 
         # Get embeddings
         print(f"  Getting Embeddings")
