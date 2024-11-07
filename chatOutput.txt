@@ -1,4 +1,77 @@
-user: When is hw 2 due?
-assistant: The due date for HW2 is October 24, 2024.
-user: wrong, try again
-assistant: The due date for HW2 is actually October 31, 2024.
+user: When is Homework 2 due?
+assistant: When is Homework 2 due?
+
+DOCUMENTS:
+ASSIGNMENT
+Title: Homework 2 - Lists Interfaces
+Created Date: October 04, 2024 11:38 AM
+Due Date: November 12, 2024 11:59 PM
+Description:
+## Overview
+
+In this assignment, students will build on HW1's classes, possibly needing to refactor them slightly to adhere to an expanded use case involving Lists objects and Interfaces
+
+### Learning Objectives
+
+Students will be able to...
+
+  * write tests by creating example List objects
+  * write methods that use mutable List objects to reduce into answers, search for elements, and produce new (filtered) lists
+  * use the for-each loop to iterate over a List
+  * modify existing code to adhere to an interface
+  * write new code that also adheres to an interface
+  * write generic client-code that only depends on the interface so new behavior can be added without modification (Open-Closed Principle)
+
+### Work Summary
+
+  * [Lab 2:](https://canvas.wpi.edu/courses/65295/assignments/374165 "Lab 2")
+    * Stub out Competition.java's methods
+    * Make Copter implement Vehicle
+    * Write tests for Competition objects using lists of Copter (submit these tests to gradescope in a file called Examples.java) 
+      * Copter.java, Propellers.java, Battery.java, and Wheels.java on the reference implementation will implement equals() and toString()
+
+## Homework 2 Specific Details
+
+The specific implementation details of Homework 2 are as follows:
+
+* Override equals() and toString() for every class you make including Copter, Propellers, Battery, Wheels, and Drone from HW1
+* Implement the methods defined on Vehicle interface for Competition, Copter, Propellers, Battery, and Wheels
+* Implement a class Rover that implements Vehicle
+* Implement a class with a component class(es) for a third vehicle class of your design
+* Write tests for Competition objects using lists of Copter, Propellers, Battery, Wheels, and Drone
+* Design and test a third vehicle class that implements Vehicle
+
+## What to Submit
+
+  * Examples.java 
+    * including tests for Competition objects using lists of Copter, Propellers, Battery, Wheels, and Drone
+    * including tests for Competition objects using lists mixed with Copter, Propellers, Battery, Wheels, and Drone
+    * including tests using your third vehicle class
+
+## Autograded and Human-graded Rubric
+
+  1. [40 points] Autograded on functional correctness (and thus worth fewer points)
+  2. [10 points] Any moderately "redundant computation" should be put in a helper method.
+  3. [10 points] Single Responsibility Principle in action: 
+    Each class's methods should only perform computation using: 
+    - its own fields
+    - parameters to its methods
+    Each class's methods should NOT perform computation using: 
+    - the fields of its fields
+
+  4. [10 points] CS1101-level programming tasks in Java-style syntax
+
+  5. [10 points] Documentation, testing, and implementation of Vehicle interface and other classes
+
+  6. [5 points] Javadoc and unit tests for classes and methods
+
+  7. [5 points] CS1101-level programming tasks in functional correctness
+
+  8. [5 points] Test code for various classes and methods
+
+## What to submit
+
+  * Examples.java 
+    * with tests for Competition objects using lists of Copter, Propellers, Battery, Wheels, and Drone
+    * with tests for Competition objects using lists mixed with Copter, Propellers, Battery, Wheels, and Drone
+    * with tests using your third vehicle class

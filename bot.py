@@ -59,11 +59,9 @@ def queryBot(query):
             echo=False,  # Echo the prompt back in the output
             stream=True,
         )
-        outText = ""
         for out in output:
             text = out["choices"][0]["text"]
-            outText += text
-        return outText
+            yield text
     else:
         text = ""
         text += f"{query['systemPrompt']}\n"
@@ -71,7 +69,7 @@ def queryBot(query):
         for item in query["dialogue"]:
             text += f"{item['name']}: {item['text']}\n"
         text += f"Bot: {query['responseStart']}"
-        return queryAPI({"question": text})["text"]
+        yield queryAPI({"question": text})["text"]
 
 
 def createQuery(
