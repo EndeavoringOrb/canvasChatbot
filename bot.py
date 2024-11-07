@@ -2,11 +2,11 @@ from llama_cpp import Llama
 from datetime import date
 import requests
 
-API_URL = "a secret"
+API_URL = open(f"secrets.txt", "r", encoding="utf-8").read().strip()
 
 llm: Llama = Llama(
     model_path=input("Please enter path to .gguf file of model: ").strip().strip('"'),
-    n_ctx=32768,
+    n_ctx=8192,
     verbose=False,
 )
 

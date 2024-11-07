@@ -35,9 +35,9 @@ def listFilesInDir(directory):
 def summarizeText(text):
     summary = queryBot(
         createQuery(
-            "Summarize the text given by the user.",
-            [{"name": "user", "text": text}],
-            [],
+            "Summarize the document given by the user. Even if there is no text, include the info above the text.",
+            [{"name": "user", "text": ""}],
+            [text],
             "",
             True,
         )
@@ -174,6 +174,56 @@ def getDocuments(courseFolder: str):
             elif name.endswith(".pptx"):
                 text += pptx2txt2.extract_text(name)
                 documents.append(text)
+            else:
+                print(f"Could not parse {name}")
+            pbar.update(1)
+
+    return documents
+
+
+def getDocumentTitles(courseFolder: str):
+    """
+    Converts files/assignments/announcements/pages in the specified folder.
+    """
+    documents = []
+
+    # Read course json file
+    courseName = courseFolder.strip("\\/").split("\\")[-1].split("/")[-1]
+    with open(f"{courseFolder}/{courseName}.json", "r", encoding="utf-8") as f:
+        courseInfo = json.loads(f.read())
+
+    # Get all filenames
+    fileNames: list[str] = listFilesInDir(courseFolder)
+
+    totalDocuments = (
+        len(courseInfo["assignments"])
+        + len(courseInfo["announcements"])
+        + len(courseInfo["pages"])
+        + len(fileNames)
+    )
+
+    with tqdm(total=totalDocuments, desc="  Getting Documents") as pbar:
+        for item in courseInfo["assignments"]:
+            documents.append(item["title"].strip())
+            pbar.update(1)
+        for item in courseInfo["announcements"]:
+            documents.append(item["title"].strip())
+            pbar.update(1)
+        for item in courseInfo["pages"]:
+            documents.append(item["title"].strip())
+            pbar.update(1)
+
+        # Read all other files
+        for name in fileNames:
+            text = name.split("\\")[-1].split("/")[-1].split(".")[0]
+            if name.endswith(".txt"):
+                documents.append(text)
+            elif name.endswith(".pdf"):
+                documents.append(text)
+            elif name.endswith(".pptx"):
+                documents.append(text)
+            else:
+                print(f"Could not parse {name}")
             pbar.update(1)
 
     return documents
@@ -192,31 +242,33 @@ def summarizeDocuments(documents):
 
 
 if __name__ == "__main__":
+    titles = input("Use only document titles for embedding? [y/n]: ").lower() == "y"
     print(f"Loading embedding model")
     model = SentenceTransformer("nomic-ai/nomic-embed-text-v1", trust_remote_code=True)
     courseFolders = [
         # "canvasDownloads\\2\\Default Term\\SESA-Projects",
         # "canvasDownloads\\1\\Default Term\\wkgp-sesa",
         "canvasDownloads\\0\\B24\\CS2102-B24",
-        #"canvasDownloads\\0\\B24\\MA2051-B24-BL02 (group 2)",
+        # "canvasDownloads\\0\\B24\\MA2051-B24-BL02 (group 2)",
     ]
 
     for courseFolder in courseFolders:
         print(f"Preparing {courseFolder}")
 
         # Get documents
-        documents: list[str] = getDocuments(courseFolder)
+        if titles:
+            documents: list[str] = getDocumentTitles(courseFolder)
+        else:
+            documents: list[str] = getDocuments(courseFolder)
+
         print(f"  Got {len(documents):,} documents.")
-        documentLengths = []
-        for doc in documents:
-            documentLengths.append(len(llm.tokenize(doc.encode())))
+        documentLengths = [len(llm.tokenize(doc.encode())) for doc in documents]
 
         print(
             f"  Avg. Document # Tokens: {int(sum(documentLengths) / len(documents)):,}"
         )
         print(f"  Max. Document # Tokens: {max(documentLengths):,}")
-        #documents = summarizeDocuments(documents)
-        #print(documents)
+        # documents = summarizeDocuments(documents)
 
         # Get embeddings
         print(f"  Getting Embeddings")
@@ -227,4 +279,4 @@ if __name__ == "__main__":
         # Save embeddings
         courseName = courseFolder.strip("\\/").split("\\")[-1].split("/")[-1]
         os.makedirs("embeddings", exist_ok=True)
-        np.save(f"embeddings/{courseName}.npy", embeddings)
+        np.save(f"embeddings/{courseName}{'-titles' if titles else ''}.npy", embeddings)

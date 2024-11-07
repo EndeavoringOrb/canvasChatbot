@@ -28,12 +28,15 @@ def getChatText(dialogue):
 
 class Documents:
     def __init__(self, courseFolder: str) -> None:
+        titles = input("Use only document titles for embedding? [y/n]: ").lower() == "y"
         self.courseFolder = courseFolder
         self.courseName = courseFolder.strip("\\/").split("\\")[-1].split("/")[-1]
         print(f"Loading documents")
         self.documents = getDocuments(courseFolder)
         print(f"Loading embeddings")
-        self.documentEmbeddings = np.load(f"embeddings/{self.courseName}.npy")
+        self.documentEmbeddings = np.load(
+            f"embeddings/{self.courseName}{'-titles' if titles else ''}.npy"
+        )
         print(f"Loading embedding model")
         self.model = SentenceTransformer(
             "nomic-ai/nomic-embed-text-v1", trust_remote_code=True
@@ -47,7 +50,8 @@ class Documents:
 
         # Get most similar documents
         similarities = (self.documentEmbeddings @ queryEmbedding.T).flatten()
-        topNIndices = np.argpartition(similarities, -topN)[-topN:]
+        topNIndices = np.flip(np.argpartition(similarities, -topN)[-topN:])
+        print("indices, scores:", topNIndices, similarities[topNIndices])
 
         documents = []
         for idx in topNIndices:
@@ -72,7 +76,7 @@ if __name__ == "__main__":
 
         # Search for documents
         print(f'searching documents with query "{searchQuery}"')
-        documents = documentSearcher.findDocuments(searchQuery, 4)
+        documents = documentSearcher.findDocuments(searchQuery, 2)
         for i, doc in enumerate(documents):
             print(f"DOC {i}:")
             print(doc)
