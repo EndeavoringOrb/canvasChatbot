@@ -2,10 +2,10 @@ from llama_cpp import Llama
 from datetime import date
 import requests
 
-API_URL = "https://arc-ai-rag-01.wpi.edu/api/v1/prediction/d1f72c8e-a6af-4db8-ac97-d55e33bc6648"
+API_URL = "a secret"
 
 llm: Llama = Llama(
-    model_path="C:/Users/aaron/CODING/llms/Llama-3.2-1B-Instruct-Q4_K_M.gguf",
+    model_path=input("Please enter path to .gguf file of model: "),
     n_ctx=32768,
     verbose=False,
 )
