@@ -1,2 +1,8 @@
-user: Who is the main professor for this course?
-assistant: The main professor for this course, CS2102 - Object Oriented Design Concepts (OODC), is Prof. Matthew Ahrens, in collaboration with Prof. Yu-Shan "Sami" Sun and Prof. Hao Loi.
+user: Who are the professors for this course?
+assistant: Unfortunately, the provided documents do not mention specific professors for the course. However, I can provide some additional context and information that might be helpful.
+
+The first document appears to be an announcement for the course, and the second document seems to be an update for the students, including some reminders and notes for the upcoming week.
+
+Based on the course descriptions, Prof. Sun is mentioned in both documents, as is Prof. Loi. However, it's possible that Prof. Loi is not a regular instructor for the course, and Prof. Sun is the main instructor for the course.
+
+As for the regular instructors, Prof. Ahrens is mentioned in both documents, and it's likely that he is the main instructor for the course. However, the course description does not explicitly state who the other instructors are.

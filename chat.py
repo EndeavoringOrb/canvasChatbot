@@ -30,11 +30,15 @@ class Documents:
     def __init__(self, courseFolder: str) -> None:
         self.courseFolder = courseFolder
         self.courseName = courseFolder.strip("\\/").split("\\")[-1].split("/")[-1]
+        print(f"Loading documents")
         self.documents = getDocuments(courseFolder)
+        print(f"Loading embeddings")
         self.documentEmbeddings = np.load(f"embeddings/{self.courseName}.npy")
+        print(f"Loading embedding model")
         self.model = SentenceTransformer(
             "nomic-ai/nomic-embed-text-v1", trust_remote_code=True
         )
+        print(f"Finished preparation\n")
 
     def findDocuments(self, query, topN):
         # Get query embedding
@@ -53,7 +57,6 @@ class Documents:
 
 
 if __name__ == "__main__":
-    print(f"Loading documents")
     documentSearcher = Documents(input("Please enter the course folder path: "))
     local = True
     dialogue = []
@@ -69,7 +72,7 @@ if __name__ == "__main__":
 
         # Search for documents
         print(f'searching documents with query "{searchQuery}"')
-        documents = documentSearcher.findDocuments(searchQuery, 2)
+        documents = documentSearcher.findDocuments(searchQuery, 4)
         for i, doc in enumerate(documents):
             print(f"DOC {i}:")
             print(doc)

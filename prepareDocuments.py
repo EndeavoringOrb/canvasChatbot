@@ -45,6 +45,9 @@ def summarizeText(text):
 
 
 def getDocuments(courseFolder: str):
+    """
+    Converts files/assignments/announcements/pages in the specified folder.
+    """
     documents = []
 
     # Read course json file
